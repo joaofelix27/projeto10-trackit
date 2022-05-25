@@ -13,7 +13,8 @@ function Footer() {
             <Link style={{ textDecoration: 'none' }} to="/habitos">
                 <h1>Hábitos</h1>
             </Link>
-            <div style={{ fontSize: 50, marginTop: -5 }} >
+            <Link style={{ textDecoration: 'none' }} to="/hoje">
+            <div  >
                 <CircularProgressbar
                     value={percentage}
                     background={true}
@@ -60,6 +61,7 @@ function Footer() {
                     }}
                 />
             </div>
+            </Link>
             <Link style={{ textDecoration: 'none' }} to="/historico">
                 <h1>Histórico</h1>
             </Link>
