@@ -3,7 +3,8 @@ import login from "../assets/images/login.png"
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
+import { Oval } from  'react-loader-spinner'
 
 function Cadastro() {
     const [email, setEmail] = useState("");
@@ -13,7 +14,7 @@ function Cadastro() {
     const [disabled, setDisabled]=useState(false)
     const navigate = useNavigate();
 
-    function teste (event) {
+    function fazerCadastro (event) {
         event.preventDefault();
         
         if (email!=="") {
@@ -28,15 +29,12 @@ function Cadastro() {
             setDisabled(true)
         
             promise.then(response => {
-            console.log("entrei no post")
               const { data } = response;
               console.log(data)
               navigate('/')
             });
         
             promise.catch(err => {
-                console.log("entrei no erro")
-              const message = err.response.statusText;
               alert("Erro no cadastro!");
               setDisabled(false)
             })
@@ -52,7 +50,7 @@ function Cadastro() {
                 <input type="password" placeholder='senha' disabled={disabled} onChange={e => setSenha(e.target.value )} ></input>
                 <input type="text" placeholder='nome' disabled={disabled} onChange={e => setNome(e.target.value )} ></input>
                 <input type="text" placeholder='foto' disabled={disabled} onChange={e => setFoto(e.target.value )} ></input>
-                <button type="submit">Cadastrar</button>
+                <button type="submit">{disabled==false ? "Cadastrar" : <Oval color="#00BFFF" height={40} width={40}/> }</button>
                 <Link to="/" style={{ color: '#52B6FF' }}>
                     <h1>Já tem uma conta? Faça login!</h1>
                 </Link>
@@ -66,8 +64,8 @@ function Cadastro() {
     return (
         <Container>
             <img src={login} alt="logo" />
-          <FormularioCadastro onSubmit ={teste}>{formularioCadastro}</FormularioCadastro>
-        </Container>
+          <FormularioCadastro disabled={disabled} onSubmit ={fazerCadastro}>{formularioCadastro}</FormularioCadastro>
+        </Container>  
     )
 }
 export default Cadastro;
@@ -103,7 +101,7 @@ const FormularioCadastro = styled.div`
     border-radius: 5px;
     margin-bottom:6px;
     border: 1px solid #D4D4D4;
-    background-color: #FFFFFF;
+    background-color: ${props => props.disabled ? "#F2F2F2" : "#FFFFFF"};
     font-family: Lexend Deca;
     font-size: 20px;
     font-weight: 400;
@@ -122,7 +120,12 @@ const FormularioCadastro = styled.div`
 
 
   button {
-    height: 45px;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    height: ${props => props.disabled ? "auto" : "45px"};
+    opacity: ${props => props.disabled ? 0.7 : 1};
+    color: #FFFFFF;
     width: 303px;
     border-radius: 4.6px;
     background-color: #52B6FF;
@@ -132,7 +135,6 @@ const FormularioCadastro = styled.div`
     font-weight: 400;
     line-height: 26px;
     letter-spacing: 0em;
-    color: #FFFFFF;
     margin-bottom:25px;
   }
   h1{
