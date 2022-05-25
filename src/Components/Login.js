@@ -1,9 +1,11 @@
 import styled from 'styled-components';
-import login from "../assets/images/login.png"
+import loginLogo from "../assets/images/login.png"
 import { Link, useNavigate } from 'react-router-dom';
 import {  useState } from 'react';
 import axios from 'axios';
 import { Oval } from  'react-loader-spinner'
+import { useContext } from "react";
+import UserContext from "./UserContext";
 
 
 
@@ -11,6 +13,7 @@ function Login() {
   const [disabled, setDisabled] = useState(false)
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const { login, setLogin } = useContext(UserContext);
   const navigate = useNavigate()
 
   function fazerLogin(event) {
@@ -28,7 +31,8 @@ function Login() {
 
       promise.then(response => {
         const { data } = response;
-        console.log(data)
+        setLogin(data)
+        console.log(login)
         navigate('/hoje')
       });
 
@@ -46,7 +50,7 @@ function Login() {
         <form>
           <input type="email" placeholder='email' disabled={disabled} onChange={e => setEmail(e.target.value)} ></input>
           <input type="password" placeholder='senha' disabled={disabled} onChange={e => setSenha(e.target.value)} ></input>
-          <button type='submit'> {disabled==false ? "Entrar" : <Oval color="#00BFFF" height={40} width={40} />}</button>
+          <button type='submit'> {disabled===false ? "Entrar" : <Oval color="#00BFFF" height={40} width={40} />}</button>
         </form>
         <Link to="/cadastro" style={{ color: '#52B6FF' }}>
           <h1>Não tem uma conta? Cadastre-se!</h1>
@@ -58,7 +62,7 @@ function Login() {
 
   return (
     <Container >
-      <img src={login} alt="logo" />
+      <img src={loginLogo} alt="logo" />
       <FormularioLogin disabled={disabled} onSubmit={fazerLogin}>{formularioLogin}</FormularioLogin>
 
     </Container>

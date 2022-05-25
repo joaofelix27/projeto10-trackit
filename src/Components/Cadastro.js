@@ -50,7 +50,7 @@ function Cadastro() {
                 <input type="password" placeholder='senha' disabled={disabled} onChange={e => setSenha(e.target.value )} ></input>
                 <input type="text" placeholder='nome' disabled={disabled} onChange={e => setNome(e.target.value )} ></input>
                 <input type="text" placeholder='foto' disabled={disabled} onChange={e => setFoto(e.target.value )} ></input>
-                <button type="submit">{disabled==false ? "Cadastrar" : <Oval color="#00BFFF" height={40} width={40}/> }</button>
+                <button type="submit">{disabled===false ? "Cadastrar" : <Oval color="#00BFFF" height={40} width={40}/> }</button>
                 <Link to="/" style={{ color: '#52B6FF' }}>
                     <h1>Já tem uma conta? Faça login!</h1>
                 </Link>
