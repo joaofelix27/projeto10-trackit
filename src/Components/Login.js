@@ -1,20 +1,33 @@
 import styled from 'styled-components';
 import login from "../assets/images/login.png"
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
+
 
 function Login() {
-  return (
-    <Container>
-      <img src={login} alt="logo" />
-      <form>
-        <input type="email" placeholder='email' ></input>
-        <input type="password" placeholder='senha' ></input>
+  const [disabled, setDisabled]=useState(false)
+
+  function montarFormularioLogin (){
+    return (
+      <>
+       <form>
+        <input disabled={disabled} type="email" placeholder='email'  ></input>
+        <input disabled={disabled} type="password" placeholder='senha'  ></input>
         <button>Entrar</button>
       </form>
       <Link to="/cadastro" style={{ color: '#52B6FF' }}>
       <h1>Não tem uma conta? Cadastre-se!</h1>
       </Link>
-      
+      </>
+    )
+  }
+  const formularioLogin = montarFormularioLogin()
+
+  return (
+    <Container>
+      <img src={login} alt="logo" />
+      <FormularioLogin>{formularioLogin}</FormularioLogin>
 
     </Container>
   )
@@ -31,7 +44,13 @@ const Container = styled.div`
   padding-top: 68px;
   padding-bottom:169px;
   
-
+  img {
+    height: 180px;
+    width: 180px;
+    margin-bottom:33px;
+  }
+`;
+const FormularioLogin = styled.div`
   form{
     display:flex;
     flex-direction:column;
@@ -62,11 +81,7 @@ const Container = styled.div`
 
   }
 
-  img {
-    height: 180px;
-    width: 180px;
-    margin-bottom:33px;
-  }
+
   button {
     height: 45px;
     width: 303px;
