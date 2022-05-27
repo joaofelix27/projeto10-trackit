@@ -1,19 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
  
 const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100;200;300;400;500;600;700;800;900&family=Recursive:wght@300;400;500;600;700;800;900&family=Righteous&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
-body {
-  font-family: 'Lexend Deca', sans-serif;
-  }
-  *{
-    box-sizing: border-box;
-  }
-  ::placeholder { 
-    color: #DBDBDB;
-
-  }
-
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
   a, abbr, acronym, address, big, cite, code,
@@ -59,6 +46,18 @@ body {
   }
   strong {
     font-weight: bold;
+  }
+
+  body {
+  font-family: 'Lexend Deca', sans-serif;
+  background-color: #fafafa;
+  }
+  *{
+    box-sizing: border-box;
+  }
+  ::placeholder { 
+    color: #DBDBDB;
+
   }
 `;
  

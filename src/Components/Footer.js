@@ -83,6 +83,7 @@ const Footer1 = styled.div`
     box-shadow: 0px 4px 4px 0px #00000026;
     background-color: #FFFFFF;
     padding:0 36px;
+    border-top: 1px solid #D4D4D4;
     
     div {
         height: 91px;
