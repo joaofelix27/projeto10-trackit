@@ -23,21 +23,20 @@ function Habitos() {
   const [habitosCriados, setHabitosCriados] = useState([]);
   const [name, setName] = useState("");
   const { login, setLogin } = useContext(UserContext);
-  const navigate= useNavigate()
+  const navigate = useNavigate();
 
-  const [dias, setDia] = useState(diasBase);
+  const [dias, setDias] = useState(diasBase);
   useEffect(() => {
     const dadosLogin = window.localStorage.getItem("dadosLogin");
     if (dadosLogin) {
       const dadosLoginOBJ = JSON.parse(dadosLogin);
       setLogin(dadosLoginOBJ);
     } else {
-        navigate('/')
+      navigate("/");
     }
   }, [setLogin]);
   useEffect(() => {
     if (login.token) {
-        console.log('Login:',login)
       const config = {
         headers: {
           Authorization: "Bearer " + login.token,
@@ -54,7 +53,7 @@ function Habitos() {
           const message = err.response.statusText;
           alert(message);
         });
-    } 
+    }
   }, [login]);
 
   function adicionaHabito() {
@@ -81,7 +80,7 @@ function Habitos() {
       setCriarHabito(false);
     });
     promisse.catch((erro) => {
-      console.log("Deu ruim");
+      alert("Hábito não adicionado!");
     });
   }
 
@@ -98,7 +97,7 @@ function Habitos() {
         diasSelecionados.push(i);
       }
     }
-    setDia(novoDias);
+    setDias(novoDias);
     setSelecionados(diasSelecionados);
   }
   function deletarHabito(id) {
@@ -116,10 +115,9 @@ function Habitos() {
         (habito) => habito.id !== id
       );
       setHabitosCriados(novosHabitosCriados);
-      console.log(response);
     });
     promisse.catch((erro) => {
-      console.log("Deu ruim");
+      alert("Hábito não deletado");
     });
   }
 
@@ -154,7 +152,16 @@ function Habitos() {
 
             <div className="base">
               <h1 onClick={() => setCriarHabito(false)}>Cancelar</h1>
-              <button onClick={() => adicionaHabito()}>
+              <button
+                onClick={() => {
+                  if (name && selecionados.length!=0) {
+                    adicionaHabito();
+                    setName("")
+                    setDias(diasBase)
+                    setSelecionados([])
+                  } else { alert('Preencha as informações corretamente')}
+                }}
+              >
                 {disabled === false ? (
                   "Salvar"
                 ) : (
@@ -167,11 +174,10 @@ function Habitos() {
           ""
         )}
 
-        {habitosCriados === [] ? (
+        {habitosCriados == "" ? (
           <h1 className="noTrack">
-            {" "}
             Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
-            começar a trackear!{" "}
+            começar a trackear!
           </h1>
         ) : (
           <div>
@@ -231,8 +237,8 @@ export default Habitos;
 
 const Container = styled.section`
   padding: 98px 18px;
-  background-color:#F2F2F2;
-  height:100vh;
+  background-color: #f2f2f2;
+  height: 100vh;
 `;
 const Topo = styled.div`
   display: flex;
