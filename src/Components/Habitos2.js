@@ -5,57 +5,45 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Oval } from "react-loader-spinner";
 import UserContext from "./Context/UserContext";
-import { useNavigate } from "react-router-dom";
+
+const DIAS_BASE = [
+  { text: "D", day: "domingo", status: "normal" },
+  { text: "S", day: "segunda", status: "normal" },
+  { text: "T", day: "terça", status: "normal" },
+  { text: "Q", day: "quarta", status: "normal" },
+  { text: "Q", day: "quinta", status: "normal" },
+  { text: "S", day: "sexta", status: "normal" },
+  { text: "S", day: "sábado", status: "normal" },
+];
 
 function Habitos() {
-  const diasBase = [
-    { text: "D", day: "domingo", status: "normal" },
-    { text: "S", day: "segunda", status: "normal" },
-    { text: "T", day: "terça", status: "normal" },
-    { text: "Q", day: "quarta", status: "normal" },
-    { text: "Q", day: "quinta", status: "normal" },
-    { text: "S", day: "sexta", status: "normal" },
-    { text: "S", day: "sábado", status: "normal" },
-  ];
   const [criarHabito, setCriarHabito] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const [dias, setDia] = useState(DIAS_BASE);
+  const [name, setName] = useState("");
   const [selecionados, setSelecionados] = useState([]);
   const [habitosCriados, setHabitosCriados] = useState([]);
-  const [name, setName] = useState("");
-  const { login, setLogin } = useContext(UserContext);
-  const navigate= useNavigate()
+  const { login } = useContext(UserContext);
 
-  const [dias, setDia] = useState(diasBase);
   useEffect(() => {
-    const dadosLogin = window.localStorage.getItem("dadosLogin");
-    if (dadosLogin) {
-      const dadosLoginOBJ = JSON.parse(dadosLogin);
-      setLogin(dadosLoginOBJ);
-    } else {
-        navigate('/')
-    }
-  }, [setLogin]);
-  useEffect(() => {
-    if (login.token) {
-        console.log('Login:',login)
-      const config = {
-        headers: {
-          Authorization: "Bearer " + login.token,
-        },
-      };
-      const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`;
-      const promise = axios
-        .get(URL, config)
-        .then((response) => {
-          const { data } = response;
-          setHabitosCriados(data);
-        })
-        .catch((err) => {
-          const message = err.response.statusText;
-          alert(message);
-        });
-    } 
-  }, [login]);
+    const config = {
+      headers: {
+        Authorization: "Bearer " + login.token,
+      },
+    };
+    const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`;
+    const promise = axios.get(URL, config);
+
+    promise.then((response) => {
+      const { data } = response;
+      setHabitosCriados(data);
+    });
+
+    promise.catch((err) => {
+      const message = err.response.statusText;
+      alert(message);
+    });
+  }, []);
 
   function adicionaHabito() {
     const config = {
@@ -125,7 +113,7 @@ function Habitos() {
 
   function montarHabitos() {
     return (
-      <HabitosBody disabled={disabled}>
+      <HabitosBody>
         <Topo>
           <h1>Meus hábitos</h1>
           <button onClick={() => setCriarHabito(!criarHabito)}>
@@ -217,22 +205,9 @@ function Habitos() {
   );
 }
 export default Habitos;
-// const Container = styled.section`
-//   width:100%;
-// `;
-// const Topo = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-// `;
-// const HabitosBody = styled.div`
-//     background-color:#F2F2F2;
-//     height:100vh;
-//     padding:98px 16px;
 
 const Container = styled.section`
   padding: 98px 18px;
-  background-color:#F2F2F2;
-  height:100vh;
 `;
 const Topo = styled.div`
   display: flex;

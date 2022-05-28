@@ -126,7 +126,6 @@ const FormularioLogin = styled.div`
     font-weight: 400;
     line-height: 25px;
     letter-spacing: 0em;
-    color: #dbdbdb;
     padding-left: 11px;
     padding-bottom: 11px;
     padding-top: 9px;

@@ -50,7 +50,7 @@ const GlobalStyle = createGlobalStyle`
 
   body {
   font-family: 'Lexend Deca', sans-serif;
-  background-color: #fafafa;
+  background-color: #FFFFFF;
   }
   *{
     box-sizing: border-box;

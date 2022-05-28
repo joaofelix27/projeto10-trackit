@@ -26,6 +26,7 @@ const Header1 = styled.div`
     box-shadow: 0px 4px 4px 0px #00000026;
     background-color: #126BA5;
     padding:0 18px;
+    z-index:2;
 
     img:nth-child(1) {
     width: 97px;
