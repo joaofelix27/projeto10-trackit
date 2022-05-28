@@ -6,11 +6,6 @@ import axios from 'axios';
 import UserContext from "./Context/UserContext";
 
 function Habitos() {
-    const [criarHabito, setCriarHabito] = useState(false);
-    const [selecionados, setSelecionados] = useState([]);
-    const [habitosCriados, setHabitosCriados] = useState([]);
-    const [name, setName] = useState("");
-    const { login, setLogin } = useContext(UserContext);
     const diasBase = [
         { text: "D", day: "domingo", status: "normal" },
         { text: "S", day: "segunda", status: "normal" },
@@ -20,6 +15,11 @@ function Habitos() {
         { text: "S", day: "sexta", status: "normal" },
         { text: "S", day: "sábado", status: "normal" },
     ]
+    const [criarHabito, setCriarHabito] = useState(false);
+    const [selecionados, setSelecionados] = useState([]);
+    const [habitosCriados, setHabitosCriados] = useState([]);
+    const [name, setName] = useState("");
+    const { login} = useContext(UserContext);
     const [dias, setDia] = useState(diasBase);
     useEffect(() => {
         const config = {
@@ -42,8 +42,7 @@ function Habitos() {
         });
     }, []);
 
-    function mandarPost() {
-
+    function adicionaHabito() {
         const config = {
             headers: {
                 Authorization: "Bearer " + login.token
@@ -53,10 +52,13 @@ function Habitos() {
             name: name,
             days: selecionados
         }
+        const novosHabitosCriados=[...habitosCriados, body]
         console.log(login.token)
         const promisse = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', body, config)
-        promisse.then(response =>
-            console.log(response.data)
+        promisse.then(response => {
+            setHabitosCriados(novosHabitosCriados)
+            console.log(novosHabitosCriados)
+        }
         )
         promisse.catch(erro => {
             console.log("Deu ruim")
@@ -72,8 +74,8 @@ function Habitos() {
             novoDias[index].status = "selecionado"
         } else { novoDias[index].status = "normal" }
         for (let i = 0; i < novoDias.length; i++) {
-            if (novoDias[i].status == "selecionado") {
-                diasSelecionados.push(i + 1)
+            if (novoDias[i].status === "selecionado") {
+                diasSelecionados.push(i)
             }
         }
         setDia(novoDias)
@@ -81,6 +83,22 @@ function Habitos() {
         setSelecionados(diasSelecionados)
         console.log(selecionados)
     }
+    function deletarHabito (id){
+        const config = {
+            headers: {
+                Authorization: "Bearer " + login.token
+            }
+        }
+        const promisse = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config)
+        promisse.then(response => {
+            alert("Deletou!")
+        }
+        )
+        promisse.catch(erro => {
+            console.log("Deu ruim")
+        })
+    }
+    
     function montarHabitos() {
         return (
             <HabitosBody>
@@ -100,28 +118,24 @@ function Habitos() {
                         </div>
                         <div className='base' >
                             <h1>Cancelar</h1>
-                            <button onClick={() => mandarPost()} >Salvar</button>
+                            <button onClick={() => adicionaHabito()} >Salvar</button>
                         </div>
 
                     </div> : ""
                 }
 
-                {habitosCriados == [] ? <h1 className='noTrack'>  Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear! </h1> :
+                {habitosCriados === [] ? <h1 className='noTrack'>  Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear! </h1> :
                     <div>
                         {habitosCriados.map((habito, index1) =>
                             <div className='habitos' key={index1}  >
                                 <h1>{habito.name}</h1>
+                                <ion-icon onClick={() => deletarHabito(habito.id)} name="trash-outline"></ion-icon>
                                 <div>
                                     {dias.map((dia, index) =>
-                                        <div key={index} className={habito.days.some(day=>day==index)?"selecionado":"normal"}>
+                                        <div key={index} className={habito.days.some(day=>day===index)?"selecionado":"normal"}>
                                             {dia.text}
                                         </div>
                                     )}
-                                    {/* {habito.days.map((dia, index) =>
-                                        <div key={index} onClick={() => selecionar(index)} className={dia==index ? "selecionado" : "normal"}>
-                                            {dia}
-                                        </div>
-                                    )} */}
                                 </div>
                             </div>
 
@@ -145,8 +159,7 @@ function Habitos() {
 export default Habitos;
 
 const Container = styled.section`
-    padding: 0 18px;
-    padding-top:98px;
+    padding: 98px 18px;
 `;
 const HabitosBody = styled.div`
 
@@ -163,9 +176,16 @@ const HabitosBody = styled.div`
         border: 1px solid #D4D4D4;
         padding:0 15px;
         padding-top:13px;
+        position: relative;
         div{
             display:flex;
             margin-top:4px;
+        }
+        ion-icon {
+            position: absolute;
+            right:10px;
+            top:11px;
+            font-size:20px;
         }
 
         h1{
