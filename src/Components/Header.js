@@ -4,7 +4,7 @@ import { useContext } from "react";
 import UserContext from "./Context/UserContext";
 
 function Header() {
-    const { login, setLogin } = useContext(UserContext);
+    const { login} = useContext(UserContext);
     return (
         <Header1>
             <img src={trackIt} alt="logoTrackIt" />

@@ -78,12 +78,15 @@ function Habitos() {
       setHabitosCriados(novosHabitosCriados);
       setDisabled(false);
       setCriarHabito(false);
+      setName("");
+      setDias(diasBase);
+      setSelecionados([]);
     });
     promisse.catch((erro) => {
-      alert("Hábito não adicionado!");
+      alert("Hábito não adicionado, tente novamente!");
+      setDisabled(false);
     });
   }
-
   function selecionar(index) {
     const novoDias = [...dias];
     const diasSelecionados = [];
@@ -110,17 +113,16 @@ function Habitos() {
       `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
       config
     );
-    promisse.then((response) => {
+    promisse.then(() => {
       const novosHabitosCriados = habitosCriados.filter(
         (habito) => habito.id !== id
       );
       setHabitosCriados(novosHabitosCriados);
     });
-    promisse.catch((erro) => {
-      alert("Hábito não deletado");
+    promisse.catch(() => {
+      alert("Hábito não deletado, tente novamente");
     });
   }
-
   function montarHabitos() {
     return (
       <HabitosBody disabled={disabled}>
@@ -131,7 +133,7 @@ function Habitos() {
           </button>
         </Topo>
         {criarHabito === true ? (
-          <Body>
+          <Body disabled={disabled}>
             <input
               type="text"
               disabled={disabled}
@@ -154,12 +156,11 @@ function Habitos() {
               <h1 onClick={() => setCriarHabito(false)}>Cancelar</h1>
               <button
                 onClick={() => {
-                  if (name && selecionados.length!=0) {
+                  if (name && selecionados.length !== 0) {
                     adicionaHabito();
-                    setName("")
-                    setDias(diasBase)
-                    setSelecionados([])
-                  } else { alert('Preencha as informações corretamente')}
+                  } else {
+                    alert("Preencha as informações corretamente");
+                  }
                 }}
               >
                 {disabled === false ? (
@@ -363,7 +364,8 @@ const Body = styled.div`
     line-height: 25px;
     padding-left: 11px;
     border: 1px solid #d4d4d4;
-    color: #666666;
+    color: ${(props) => (props.disabled ? "#B3B3B3" : "#666666")};
+    background-color: ${(props) => (props.disabled ? "#F2F2F2" : "#FFFFFF")};
   }
   div {
     display: flex;
@@ -390,6 +392,7 @@ const Body = styled.div`
       line-height: 20px;
       letter-spacing: 0em;
       margin-left: 23px;
+      opacity: ${(props) => (props.disabled ? 0.7 : 1 )};
     }
 
     h1 {
@@ -418,6 +421,7 @@ const Body = styled.div`
     font-weight: 400;
     line-height: 25px;
     color: #dbdbdb;
+    pointer-events: ${(props) => (props.disabled ? "none" : "auto")};
   }
   .selecionado {
     margin-right: 4px;
@@ -434,5 +438,6 @@ const Body = styled.div`
     font-weight: 400;
     line-height: 25px;
     color: #ffffff;
+    pointer-events: ${(props) => (props.disabled ? "none" : "auto")};
   }
 `;
