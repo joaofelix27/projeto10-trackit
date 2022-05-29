@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import UserContext from "./Context/UserContext";
-import { useEffect, useState, useContext } from "react";
+import {  useContext } from "react";
 
 function Footer() {
     const { percentage } = useContext(UserContext);

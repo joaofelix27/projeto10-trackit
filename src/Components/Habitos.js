@@ -226,9 +226,10 @@ function Habitos() {
 export default Habitos;
 
 const Container = styled.section`
-  padding: 98px 18px;
   background-color: #f2f2f2;
   height: 100vh;
+  padding: 98px 18px;
+  overflow-y:scroll;
 `;
 const Topo = styled.div`
   display: flex;

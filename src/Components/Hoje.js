@@ -46,7 +46,7 @@ function Hoje() {
           alert(message);
         });
     }
-  }, [login,click]);
+  }, [login,click,setPercentage]);
   return (
     <>
       <Header />
@@ -75,6 +75,7 @@ const Container = styled.section`
   padding: 98px 18px;
   background-color: #f2f2f2;
   height: 100vh;
+  overflow-y:scroll;
 `;
 
 const DiaSemana = styled.div`
