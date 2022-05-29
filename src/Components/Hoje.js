@@ -6,6 +6,7 @@ import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import HabitosHoje from "./HabitosHoje";
 import styled from "styled-components";
+import dayjs from 'dayjs';
 
 function Hoje() {
   const { login, setLogin } = useContext(UserContext);
@@ -52,7 +53,7 @@ function Hoje() {
       <Header />
       <Container>
         <DiaSemana checks={checks}>
-          <h1>Dia da Semana</h1>
+          <h1>{`${dayjs().format('dddd')}, ${dayjs().format('DD')}/${dayjs().format('MM')}`}</h1>
           {checks.length===0 ? <h2>Nenhum hábito concluido ainda</h2> : <h2>{`${percentage}% dos hábitos já concluídos`}</h2>}
         </DiaSemana>
         <ContainerHabitosHoje>
