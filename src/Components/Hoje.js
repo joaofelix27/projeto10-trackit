@@ -11,6 +11,7 @@ function Hoje() {
   const { login, setLogin } = useContext(UserContext);
   const [habitosHoje, setHabitosHoje] = useState([])
   const [click, setClick]= useState(false)
+  const [checks, setChecks]= useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     const dadosLogin = window.localStorage.getItem("dadosLogin");
@@ -34,6 +35,9 @@ function Hoje() {
         .then((response) => {
           const { data } = response;
           setHabitosHoje(data);
+          const filtraCheck= data.filter ( habito=> habito.done)
+          setChecks(filtraCheck)
+          console.log('filtra',filtraCheck.length)
         })
         .catch((err) => {
           const message = err.response.statusText;
@@ -45,9 +49,9 @@ function Hoje() {
     <>
       <Header />
       <Container>
-        <DiaSemana>
+        <DiaSemana checks={checks}>
           <h1>Dia da Semana</h1>
-          <h2>Nenhum hábito concluido ainda</h2>
+          {checks.length===0 ? <h2>Nenhum hábito concluido ainda</h2> : <h2>{`${((checks.length/habitosHoje.length)*100).toFixed(0)}% dos hábitos já concluídos`}</h2>}
         </DiaSemana>
         <ContainerHabitosHoje>
             {
@@ -88,7 +92,7 @@ const DiaSemana = styled.div`
     line-height: 22px;
     letter-spacing: 0em;
     text-align: left;
-    color: #bababa;
+    color: ${props => props.checks.length===0 ? '#bababa' : '#8FC549'}
   }
 `;
 
