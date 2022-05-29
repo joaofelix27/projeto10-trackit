@@ -12,6 +12,7 @@ function Hoje() {
   const [habitosHoje, setHabitosHoje] = useState([])
   const [click, setClick]= useState(false)
   const [checks, setChecks]= useState([]);
+  const { percentage,setPercentage } = useContext(UserContext);
   const navigate = useNavigate();
   useEffect(() => {
     const dadosLogin = window.localStorage.getItem("dadosLogin");
@@ -37,7 +38,8 @@ function Hoje() {
           setHabitosHoje(data);
           const filtraCheck= data.filter ( habito=> habito.done)
           setChecks(filtraCheck)
-          console.log('filtra',filtraCheck.length)
+          const porcentagem =((filtraCheck.length/data.length)*100).toFixed(0)
+          setPercentage(porcentagem)
         })
         .catch((err) => {
           const message = err.response.statusText;
@@ -51,7 +53,7 @@ function Hoje() {
       <Container>
         <DiaSemana checks={checks}>
           <h1>Dia da Semana</h1>
-          {checks.length===0 ? <h2>Nenhum hábito concluido ainda</h2> : <h2>{`${((checks.length/habitosHoje.length)*100).toFixed(0)}% dos hábitos já concluídos`}</h2>}
+          {checks.length===0 ? <h2>Nenhum hábito concluido ainda</h2> : <h2>{`${percentage}% dos hábitos já concluídos`}</h2>}
         </DiaSemana>
         <ContainerHabitosHoje>
             {

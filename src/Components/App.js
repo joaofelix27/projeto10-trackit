@@ -10,8 +10,9 @@ import Login from "./Login";
 
 function App() {
   const [login, setLogin] = useState({});
+  const [percentage, setPercentage] = useState(0);
 
-  const contextValue = { login, setLogin };
+  const contextValue = { login, setLogin, percentage, setPercentage };
 
   return (
     <>
