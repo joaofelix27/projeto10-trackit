@@ -9,6 +9,8 @@ import styled from "styled-components";
 
 function Hoje() {
   const { login, setLogin } = useContext(UserContext);
+  const [habitosHoje, setHabitosHoje] = useState([])
+  const [click, setClick]= useState(false)
   const navigate = useNavigate();
   useEffect(() => {
     const dadosLogin = window.localStorage.getItem("dadosLogin");
@@ -18,7 +20,7 @@ function Hoje() {
     } else {
       navigate("/");
     }
-  }, [setLogin]);
+  }, [setLogin,navigate]);
   useEffect(() => {
     if (login.token) {
       const config = {
@@ -31,14 +33,14 @@ function Hoje() {
         .get(URL, config)
         .then((response) => {
           const { data } = response;
-          console.log(data);
+          setHabitosHoje(data);
         })
         .catch((err) => {
           const message = err.response.statusText;
           alert(message);
         });
     }
-  }, [login]);
+  }, [login,click]);
   return (
     <>
       <Header />
@@ -47,7 +49,15 @@ function Hoje() {
           <h1>Dia da Semana</h1>
           <h2>Nenhum hábito concluido ainda</h2>
         </DiaSemana>
-        <HabitosHoje />
+        <ContainerHabitosHoje>
+            {
+                habitosHoje ? 
+                habitosHoje.map ((habito) =>
+                    <HabitosHoje key={habito.id} click={click} setClick={setClick} id={habito.id} done={habito.done} name={habito.name} 
+                    currentSequence={habito.currentSequence} highestSequence={habito.highestSequence}/>
+                    ) : "Carregando"
+            }
+        </ContainerHabitosHoje>
       </Container>
       <Footer />
     </>
@@ -78,6 +88,10 @@ const DiaSemana = styled.div`
     line-height: 22px;
     letter-spacing: 0em;
     text-align: left;
-    color: #BABABA;
+    color: #bababa;
   }
+`;
+
+const ContainerHabitosHoje = styled.div`
+  margin-top: 28px;
 `;

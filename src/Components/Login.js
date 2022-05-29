@@ -11,7 +11,7 @@ function Login() {
   const [disabled, setDisabled] = useState(false);
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const { login, setLogin } = useContext(UserContext);
+  const { setLogin } = useContext(UserContext);
   const navigate = useNavigate();
 
   function fazerLogin(event) {

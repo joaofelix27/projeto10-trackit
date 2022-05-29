@@ -5,7 +5,7 @@ import Hoje from "./Hoje";
 import Habitos from "./Habitos";
 import Historico from "./Historico";
 import UserContext from "./Context/UserContext";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Login from "./Login";
 
 function App() {

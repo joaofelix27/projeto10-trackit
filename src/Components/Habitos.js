@@ -34,7 +34,7 @@ function Habitos() {
     } else {
       navigate("/");
     }
-  }, [setLogin]);
+  }, [setLogin,navigate]);
   useEffect(() => {
     if (login.token) {
       const config = {
