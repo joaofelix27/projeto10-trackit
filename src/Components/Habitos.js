@@ -224,17 +224,6 @@ function Habitos() {
   );
 }
 export default Habitos;
-// const Container = styled.section`
-//   width:100%;
-// `;
-// const Topo = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-// `;
-// const HabitosBody = styled.div`
-//     background-color:#F2F2F2;
-//     height:100vh;
-//     padding:98px 16px;
 
 const Container = styled.section`
   padding: 98px 18px;
