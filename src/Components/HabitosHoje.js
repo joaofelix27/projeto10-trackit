@@ -121,12 +121,12 @@ const HabitoEsquerda = styled.div`
     }
     h4 {
       font-family: Lexend Deca;
-      font-size: 13px;
+      font-size: 13px;  
       font-weight: 400;
       line-height: 16px;
       letter-spacing: 0em;
       text-align: left;
-      color:${(props) => (props.highestSequence>0 ? props.highestSequence===props.currentSequence ? "#8FC549" : "#666666":'#666666' )};
+      color:${(props) => (props.done ? props.highestSequence===props.currentSequence ? "#8FC549" : "#666666":'#666666' )};
       margin-left:4px;
     }
     
