@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import loginLogo from "../assets/images/login.png";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Oval } from "react-loader-spinner";
 import { useContext } from "react";
@@ -13,6 +13,15 @@ function Login() {
   const [senha, setSenha] = useState("");
   const { setLogin } = useContext(UserContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const dadosLogin = window.localStorage.getItem("dadosLogin");
+    if (dadosLogin) {
+      const dadosLoginOBJ = JSON.parse(dadosLogin);
+      setLogin(dadosLoginOBJ);
+      navigate("/hoje");
+    }
+  }, [setLogin, navigate]);
 
   function fazerLogin(event) {
     event.preventDefault();

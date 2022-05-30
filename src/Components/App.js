@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import GlobalStyle from "../assets/images/globalStyle";
 import Cadastro from "./Cadastro";
 import Hoje from "./Hoje";
@@ -13,6 +13,7 @@ function App() {
   const [percentage, setPercentage] = useState(0);
 
   const contextValue = { login, setLogin, percentage, setPercentage };
+
 
   return (
     <>

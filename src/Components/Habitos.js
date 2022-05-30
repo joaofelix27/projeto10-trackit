@@ -383,6 +383,7 @@ const Body = styled.div`
       letter-spacing: 0em;
       margin-left: 23px;
       opacity: ${(props) => (props.disabled ? 0.7 : 1 )};
+      pointer-events: ${(props) => (props.disabled ? "none" : "auto")};
     }
 
     h1 {
@@ -393,6 +394,7 @@ const Body = styled.div`
       letter-spacing: 0em;
       text-align: center;
       color: #52b6ff;
+      pointer-events: ${(props) => (props.disabled ? "none" : "auto")};
     }
   }
 
